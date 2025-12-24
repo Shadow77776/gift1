@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Amiri&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-red: #b3000c; --bg-red: #7a0000; }
+        body {
+            margin: 0; padding: 0; font-family: 'Amiri', serif;
+            background: linear-gradient(to bottom, #5e0000, #2b0000);
+            color: #333; display: flex; justify-content: center;
+            min-height: 100vh; overflow-x: hidden; direction: rtl;
+        }
+        /* Top Lights */
+        .lights {
+            position: fixed; top: 10px; width: 100%;
+            display: flex; justify-content: space-around; z-index: 20;
+        }
+        .light { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 10px white; }
+        .red { background: #ff0000; animation: blink 1s infinite; }
+        .green { background: #00ff00; animation: blink 1.2s infinite; }
+        .yellow { background: #ffff00; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .container { width: 90%; max-width: 400px; text-align: center; padding-top: 50px; z-index: 15; }
+        .card {
+            background: #fffafa; border-radius: 30px; padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); margin-bottom: 20px;
+            animation: slideUp 0.6s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .btn {
+            background: linear-gradient(to right, #b3000c, #7a0000);
+            color: white; border: none; padding: 12px; border-radius: 50px;
+            width: 90%; font-weight: bold; cursor: pointer; margin-top: 15px;
+        }
+        .red-round-btn {
+            background: #ff3b3b; color: white; border: none; padding: 15px 45px;
+            border-radius: 50px; font-size: 1.3rem; cursor: pointer; margin: 20px 0;
+            box-shadow: 0 0 20px rgba(255, 59, 59, 0.4);
+        }
+        .hidden { display: none; }
+        .letter-text { color: #5e0000; font-size: 1.15rem; line-height: 1.8; font-weight: bold; white-space: pre-line; }
+        .memory-card { background: white; border-radius: 20px; margin-bottom: 20px; padding: 10px; }
+        .memory-card img, .memory-card video { width: 100%; border-radius: 15px; display: block; }
+
+        #music-btn {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            width: 45px; height: 45px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="lights">
+    <div class="light red"></div><div class="light green"></div><div class="light yellow"></div>
+    <div class="light red"></div><div class="light green"></div><div class="light yellow"></div>
+</div>
+
+<audio id="bg-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div id="music-btn" class="hidden" onclick="toggleMusic()">🎵</div>
+
+<div class="container">
+    <div id="login-page" class="card">
+        <div style="background: #d4a373; color: white; padding: 5px 25px; border-radius: 50px; display: inline-block; margin-bottom: 10px;">2026</div>
+        <div style="font-size: 50px; margin: 10px 0;">🎄</div>
+        <h1 style="color:var(--primary-red); font-family: 'Dancing Script'; margin: 0;">Christmas</h1>
+        <p style="color: #666; margin: 5px 0;">enter password</p>
+        <input type="password" id="pass" placeholder="Password" style="width: 85%; padding: 12px; border-radius: 15px; border: 1px solid #ddd; text-align: center;">
+        <button class="btn" onclick="checkPass()">🔓 unlock</button>
+        <div style="font-size: 1.5rem; margin-top: 15px;">☃️ 💝 🎅 🎁 🎄</div>
+    </div>
+
+    <div id="message-page" class="card hidden">
+        <div style="font-size:50px">📩</div>
+        <h2 style="color:var(--primary-red); margin-top: 0;">ينور عيني</h2>
+        <div class="letter-text">
+            احلي حد هدخل معاه السنه الجديده ربنا يخليكي ليا
+            يارب تكون سنه حلوه وهتبقا حلوه اصلا
+            لاننا مع بعض وانا داخل السنه وانا معايا
+            اغلي واكتر حد بحبه
+            أنت سبب فرحي انتي سبب ضحكتي انتي
+            سبب كل حاجه حلوه
+            بحبك
+            تعالي نشوف كام ميموري كده مع بعض
+        </div>
+        <button class="btn" onclick="showMemories()">✨ start journey</button>
+    </div>
+
+    <div id="memories-feed" class="hidden">
+        <div id="photos-container"></div>
+        
+        <div style="margin: 30px 0;">
+            <p style="color: white; font-size: 1.2rem; font-weight: bold;">✨ في حاجة مهمة عايز أقولهالك ✨</p>
+            <button class="red-round-btn" onclick="showFinalMessage()"> ❤️ دوس هنا ❤️ </button>
+        </div>
+    </div>
+
+    <div id="final-card" class="card hidden">
+        <div style="font-size:40px">🎄</div>
+        <h2 style="color:var(--primary-red)">حبيبتي</h2>
+        <div class="letter-text">
+            احلي حد هدخل بيه السنه دي
+            ربنا يخليكي ليا يحبيبتي 💍
+            ومهما الدنيا تبعدنا هنفضل ديما سوا ❄️
+            انتي كل حاجه ليا 🌲
+            ومقدرش اني استغنا عنك 💕
+            هتبقا احلي سنه بيكي 2026
+        </div>
+        <button class="btn" onclick="location.reload()">🎄 Restart Journey 🎁</button>
+        <p style="color: #888; font-size: 0.8rem; margin-top: 10px;">🎅 Merry Christmas 2026 ☃️</p>
+    </div>
+</div>
+
+<script>
+    // EDIT YOUR PASSWORD, MUSIC, AND FILES HERE
+    const config = {
+        password: "love",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        memories: [
+            { file: "c:\Users\moham\Desktop\WhatsApp Video 2025-12-24 at 7.05.54 PM.mp4", text: "الاغنية اللي بنحبها ❤️" }, // Works for .mp4 or .mov
+            { file: "photo2.jpg", text: "بحبكك" },
+            { file: "photo3.jpg", text: "فاكره اليوم ده" },
+            { file: "video2.mov", text: "ربنا يخليكي ليا" }
+        ]
+    };
+
+    function checkPass() {
+        if (document.getElementById('pass').value.toLowerCase() === config.password) {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('message-page').classList.remove('hidden');
+            document.getElementById('music-btn').classList.remove('hidden');
+            document.getElementById('bg-music').src = config.audioUrl;
+            document.getElementById('bg-music').play();
+        }
+    }
+
+    function showMemories() {
+        document.getElementById('message-page').classList.add('hidden');
+        const container = document.getElementById('photos-container');
+        container.innerHTML = "";
+        
+        config.memories.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'memory-card';
+            const isVideo = m.file.toLowerCase().endsWith('.mp4') || m.file.toLowerCase().endsWith('.mov');
+            
+            if (isVideo) {
+                div.innerHTML = `<video controls><source src="${m.file}" type="video/mp4"></video>
+                                 <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
+            } else {
+                div.innerHTML = `<img src="${m.file}">
+                                 <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
+            }
+            container.appendChild(div);
+        });
+        document.getElementById('memories-feed').classList.remove('hidden');
+    }
+
+    function showFinalMessage() {
+        document.getElementById('memories-feed').classList.add('hidden');
+        document.getElementById('final-card').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    }
+
+    function toggleMusic() {
+        const a = document.getElementById('bg-music');
+        if (a.paused) a.play(); else a.pause();
+    }
+</script>
+</body>
+</html>
