@@ -57,6 +57,175 @@
             align-items: center; justify-content: center; cursor: pointer;
             z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+        
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes softPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 59, 59, 0.4);
+    }
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 18px rgba(255, 59, 59, 0.7);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 59, 59, 0.4);
+    }
+}
+
+.shake-btn {
+    animation: softPulse 2.2s ease-in-out infinite;
+}
+
+.heart {
+    position: absolute;
+    bottom: 0;
+    font-size: 20px;
+    animation: floatUp 2.5s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.6);
+    }
+}
+/* Christmas Tree */
+.tree-wrapper {
+    text-align: center;
+    margin: 20px 0 30px;
+}
+
+.christmas-tree {
+    font-size: 80px;
+    position: relative;
+    display: inline-block;
+}
+
+/* Tree lights */
+.tree-light {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: treeBlink 1.5s infinite alternate;
+}
+
+.tree-light.red { background: #ff4d4d; top: 25px; left: 18px; }
+.tree-light.yellow { background: #ffd93d; top: 45px; left: 45px; animation-delay: .5s; }
+.tree-light.green { background: #4dff88; top: 45px; left: 5px; animation-delay: 1s; }
+.tree-light.blue { background: #4dd2ff; top: 65px; left: 25px; animation-delay: .8s; }
+
+@keyframes treeBlink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+.new-year-text {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.date-text {
+    color: #ffdede;
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+/* 🌲 Realistic Christmas Tree */
+.real-tree {
+    position: relative;
+    width: 120px;
+    margin: 0 auto 15px;
+    animation: treeSway 4s ease-in-out infinite;
+}
+
+/* layers */
+.tree-layer {
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 70px solid #1f6b3b;
+    margin: 0 auto;
+}
+
+.tree-layer.l1 { margin-top: 20px; }
+.tree-layer.l2 {
+    border-bottom-color: #1a5c34;
+    margin-top: -20px;
+}
+.tree-layer.l3 {
+    border-bottom-color: #174d2d;
+    margin-top: -25px;
+}
+
+/* trunk */
+.trunk {
+    width: 24px;
+    height: 30px;
+    background: #7a4a1f;
+    margin: -5px auto 0;
+    border-radius: 4px;
+}
+
+/* star */
+.star {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    animation: starGlow 2s ease-in-out infinite;
+}
+
+/* lights */
+.r-light {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: lightBlink 1.6s infinite alternate;
+}
+
+.r1 { background: #ff4d4d; top: 45px; left: 50px; }
+.r2 { background: #ffd93d; top: 65px; left: 35px; animation-delay: .4s; }
+.r3 { background: #4dff88; top: 65px; left: 65px; animation-delay: .8s; }
+.r4 { background: #4dd2ff; top: 85px; left: 45px; animation-delay: .6s; }
+.r5 { background: #ff9ff3; top: 95px; left: 65px; animation-delay: 1s; }
+.r6 { background: #feca57; top: 85px; left: 25px; animation-delay: 1.2s; }
+
+/* animations */
+@keyframes lightBlink {
+    from { opacity: .4; }
+    to { opacity: 1; box-shadow: 0 0 8px currentColor; }
+}
+
+@keyframes starGlow {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.2); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+@keyframes treeSway {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(1.5deg); }
+    100% { transform: rotate(0deg); }
+}
     </style>
 </head>
 <body>
@@ -79,7 +248,7 @@
         <h1 style="color:var(--primary-red); font-family: 'Dancing Script'; margin: 0;">Christmas</h1>
         <p style="color: #666; margin: 5px 0;">enter password</p>
         <input type="password" id="pass" placeholder="Password" style="width: 85%; padding: 12px; border-radius: 15px; border: 1px solid #ddd; text-align: center;">
-        <button class="btn" onclick="checkPass()">🔓 unlock</button>
+        <button class="btn shake-btn" onclick="checkPass()">🔓 unlock</button>
         <div style="font-size: 1.5rem; margin-top: 15px;">☃️ 💝 🎅 🎁 🎄</div>
     </div>
 
@@ -96,17 +265,38 @@
             بحبك
             تعالي نشوف كام ميموري كده مع بعض
         </div>
-        <button class="btn" onclick="showMemories()">✨ start journey</button>
+        <button class="btn shake-btn" onclick="showMemories()">✨ start journey</button>
     </div>
 
     <div id="memories-feed" class="hidden">
+    <div id="memories-header" class="hidden">
+    <div class="tree-wrapper">
+        <div class="christmas-tree">
+    🎄
+    <span class="tree-light red"></span>
+    <span class="tree-light yellow"></span>
+    <span class="tree-light green"></span>
+    <span class="tree-light blue"></span>
+</div>
+        <div class="new-year-text">
+            ✨ Happy New Year ✨
+        </div>
+
+        <div class="date-text">
+            ❤️ 25/5/2025 ❤️
+        </div>
+    </div>
+    </div>
         <div id="photos-container"></div>
         <div style="margin: 30px 0;">
             <p style="color: white; font-size: 1.2rem; font-weight: bold;">✨ في حاجة مهمة عايز أقولهالك ✨</p>
-            <button class="red-round-btn" onclick="showFinalMessage()"> ❤️ دوس هنا ❤️ </button>
+            <button class="red-round-btn shake-btn" onclick="showFinalMessage()"> ❤️ دوس هنا ❤️ </button>
         </div>
-    </div>
+ 
 
+</div>
+
+    
     <div id="final-card" class="card hidden">
         <div style="font-size:40px">🎄</div>
         <h2 style="color:var(--primary-red)">حبيبتي</h2>
@@ -118,8 +308,7 @@
             ومقدرش اني استغنا عنك 💕
             هتبقا احلي سنه بيكي 2026
         </div>
-        <button class="btn" onclick="location.reload()">🎄 Restart Journey 🎁</button>
-        <p style="color: #888; font-size: 0.8rem; margin-top: 10px;">🎅 Merry Christmas 2026 ☃️</p>
+        <button class="btn shake-btn" onclick="restartJourney()">🎄 Restart Journey 🎁</button>     <p style="color: #888; font-size: 0.8rem; margin-top: 10px;">🎅 Merry Christmas 2026 ☃️</p>
     </div>
 </div>
 
@@ -128,7 +317,7 @@
     password: "love",
     audioUrl: "AmrDiab.mp3",
     memories: [
-        { file: "WhatsApp Video 2025-12-24 at 7.05.54 PM.mp4", text: "اول مره نقعد مع بعض لوحدنا ❤️" },
+       { file: "WhatsApp Video 2025-12-24 at 7.05.54 PM.mp4", text: "اول مره نقعد مع بعض لوحدنا ❤️" },
         { file: "WhatsApp Video 2025-12-24 at 10.33.02 PM.mp4", text: "لما شوفنا بعض برا الهضبه اخيرا " },
         { file: "WhatsApp Video 2025-12-24 at 10.41.25 PM.mp4", text: "فاكره اول صوره مبنا " },
         { file: "WhatsApp Video 2025-12-24 at 10.33.49 PM.mp4", text: "يوم عيد ميلادك كان من احسن ايام في حياتي عشان شيفك مبسوطه " },
@@ -148,7 +337,7 @@ function checkPass() {
         
         // FORCE THE NEW SONG HERE
         audio.src = config.audioUrl; 
-        audio.load(); // Reload the player with the new file
+        audio.load(); 
         
         musicBtn.classList.remove('hidden');
         audio.play().catch(e => console.log("Audio waiting for interaction"));
@@ -158,27 +347,64 @@ function checkPass() {
 }
 
     function showMemories() {
-        document.getElementById('message-page').classList.add('hidden');
-        const container = document.getElementById('photos-container');
-        container.innerHTML = "";
-        
-        config.memories.forEach(m => {
-            const div = document.createElement('div');
-            div.className = 'memory-card';
-            const isVideo = m.file.toLowerCase().endsWith('.mp4') || m.file.toLowerCase().endsWith('.mov');
-            
-            if (isVideo) {
-                div.innerHTML = `<video controls style="width:100%; border-radius:15px;"><source src="${m.file}" type="video/mp4"></video>
-                                 <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
-            } else {
-                div.innerHTML = `<img src="${m.file}" style="width:100%; border-radius:15px;">
-                                 <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
-            }
-            container.appendChild(div);
-        });
-        document.getElementById('memories-feed').classList.remove('hidden');
-        window.scrollTo(0, 0);
-    }
+    document.getElementById('message-page').classList.add('hidden');
+    const container = document.getElementById('photos-container');
+    container.innerHTML = "";
+
+    config.memories.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'memory-card';
+        const isVideo = m.file.toLowerCase().endsWith('.mp4') || m.file.toLowerCase().endsWith('.mov');
+
+        if (isVideo) {
+            div.innerHTML = `
+                <video controls style="width:100%; border-radius:15px;">
+                    <source src="${m.file}" type="video/mp4">
+                </video>
+                <p class="letter-text" style="font-size:1rem; padding:10px;">
+                    ${m.text}
+                </p>
+            `;
+        } else {
+            div.innerHTML = `
+                <img src="${m.file}" style="width:100%; border-radius:15px;">
+                <p class="letter-text" style="font-size:1rem; padding:10px;">
+                    ${m.text}
+                </p>
+            `;
+        }
+        container.appendChild(div);
+    })
+
+
+    const allMemoriesDiv = document.createElement('div');
+allMemoriesDiv.className = 'memory-card';
+allMemoriesDiv.style.textAlign = "center";
+
+allMemoriesDiv.innerHTML = `
+    <p class="letter-text" style="
+        font-size:1.2rem;
+        margin-bottom:15px;
+    ">
+        كل الذكريات اللي ما بينا
+    </p>
+
+    <button class="red-round-btn shake-btn"
+        onclick="window.open(
+        'https://drive.google.com/drive/folders/1TGg3oc9d2U-n4gVz0vgxcEKHX1RjxUeg?usp=drive_link',
+        '_blank'
+    )">
+        💕 ذكريتنا كلها 💕
+    </button>
+`;
+
+    container.appendChild(allMemoriesDiv);
+    /* ========================== */
+
+    document.getElementById('memories-feed').classList.remove('hidden');
+    document.getElementById('memories-header').classList.remove('hidden');
+    window.scrollTo(0, 0);
+}
 
     function showFinalMessage() {
         document.getElementById('memories-feed').classList.add('hidden');
@@ -190,6 +416,33 @@ function checkPass() {
         const a = document.getElementById('bg-music');
         if (a.paused) a.play(); else a.pause();
     }
+function restartJourney() {
+    document.getElementById('final-card').classList.add('hidden');
+    document.getElementById('memories-feed').classList.add('hidden');
+    document.getElementById('login-page').classList.add('hidden');
+ document.getElementById('message-page').classList.remove('hidden');
+    
+    window.scrollTo(0, 0);
+}
+function createHearts(btn) {
+    const rect = btn.getBoundingClientRect();
+
+    for (let i = 0; i < 8; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '❤️';
+
+        heart.style.left =
+            rect.left + rect.width / 2 + (Math.random() * 40 - 20) + 'px';
+
+        heart.style.bottom =
+            window.innerHeight - rect.top + 'px';
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2500);
+    }
+}
 </script>
 </body>
 </html>
