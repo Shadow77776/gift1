@@ -134,24 +134,27 @@
             { file: "WhatsApp Video 2025-12-24 at 10.33.49 PM.mp4", text: "يوم عيد ميلادك كان من احسن ايام في حياتي عشان شيفك مبسوطه " }
         ]
     };
+}
 
-    function checkPass() {
-        const passInput = document.getElementById('pass').value.toLowerCase().trim();
-        if (passInput === config.password) {
-            // Hide login, show message
-            document.getElementById('login-page').classList.add('hidden');
-            document.getElementById('message-page').classList.remove('hidden');
-            
-            // Music Setup
-            const musicBtn = document.getElementById('music-btn');
-            const audio = document.getElementById('bg-music');
-            
-            musicBtn.classList.remove('hidden');
-            audio.play().catch(e => console.log("Audio play deferred until next click"));
-        } else {
-            alert("Wrong password! try again ❤️");
-        }
+function checkPass() {
+    const passInput = document.getElementById('pass').value.toLowerCase().trim();
+    if (passInput === config.password) {
+        document.getElementById('login-page').classList.add('hidden');
+        document.getElementById('message-page').classList.remove('hidden');
+        
+        const musicBtn = document.getElementById('music-btn');
+        const audio = document.getElementById('bg-music');
+        
+        // FORCE THE NEW SONG HERE
+        audio.src = config.audioUrl; 
+        audio.load(); // Reload the player with the new file
+        
+        musicBtn.classList.remove('hidden');
+        audio.play().catch(e => console.log("Audio waiting for interaction"));
+    } else {
+        alert("Wrong password!");
     }
+}
 
     function showMemories() {
         document.getElementById('message-page').classList.add('hidden');
