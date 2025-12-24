@@ -134,27 +134,16 @@
     };
 
    function checkPass() {
-    const enteredPass = document.getElementById('pass').value.toLowerCase();
-    if (enteredPass === config.password) {
-        // Hide login
-        document.getElementById('login-page').style.display = 'none';
-        
-        // Show message page
-        const messagePage = document.getElementById('message-page');
-        messagePage.classList.remove('hidden');
-        messagePage.style.display = 'block'; // Force display
-        
-        // Show music button and start music
-        document.getElementById('music-btn').classList.remove('hidden');
-        
-        const music = document.getElementById('bg-music');
-        music.play().catch(error => {
-            console.log("Autoplay blocked, waiting for user interaction.");
-        });
-    } else {
-        alert("Wrong password! Hint: it's 'love'");
+        const val = document.getElementById('pass').value;
+        if (val.toLowerCase() === config.password.toLowerCase()) {
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('message-page').classList.remove('hidden');
+            document.getElementById('music-btn').classList.remove('hidden');
+            document.getElementById('bg-music').play();
+        } else {
+            alert("Wrong password! ❤️");
+        }
     }
-}
 
     function showMemories() {
         document.getElementById('message-page').classList.add('hidden');
