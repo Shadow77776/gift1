@@ -13,7 +13,7 @@
             color: #333; display: flex; justify-content: center;
             min-height: 100vh; overflow-x: hidden; direction: rtl;
         }
-        /* Top Lights */
+        
         .lights {
             position: fixed; top: 10px; width: 100%;
             display: flex; justify-content: space-around; z-index: 20;
@@ -29,6 +29,7 @@
             background: #fffafa; border-radius: 30px; padding: 25px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5); margin-bottom: 20px;
             animation: slideUp 0.6s ease-out;
+            display: block; /* Default display */
         }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -42,7 +43,10 @@
             border-radius: 50px; font-size: 1.3rem; cursor: pointer; margin: 20px 0;
             box-shadow: 0 0 20px rgba(255, 59, 59, 0.4);
         }
-        .hidden { display: none; }
+        
+        /* Updated Hidden Class */
+        .hidden { display: none !important; }
+
         .letter-text { color: #5e0000; font-size: 1.15rem; line-height: 1.8; font-weight: bold; white-space: pre-line; }
         .memory-card { background: white; border-radius: 20px; margin-bottom: 20px; padding: 10px; }
         .memory-card img, .memory-card video { width: 100%; border-radius: 15px; display: block; }
@@ -97,7 +101,6 @@
 
     <div id="memories-feed" class="hidden">
         <div id="photos-container"></div>
-        
         <div style="margin: 30px 0;">
             <p style="color: white; font-size: 1.2rem; font-weight: bold;">✨ في حاجة مهمة عايز أقولهالك ✨</p>
             <button class="red-round-btn" onclick="showFinalMessage()"> ❤️ دوس هنا ❤️ </button>
@@ -121,40 +124,34 @@
 </div>
 
 <script>
-    // EDIT YOUR PASSWORD, MUSIC, AND FILES HERE
     const config = {
         password: "love",
         audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
         memories: [
-            { file: "WhatsApp Video 2025-12-24 at 7.05.54 PM.mp4", text: "اول مره نقعد مع بعض لوحدنا ❤️" }, // Works for .mp4 or .mov
+            { file: "WhatsApp Video 2025-12-24 at 7.05.54 PM.mp4", text: "اول مره نقعد مع بعض لوحدنا ❤️" },
             { file: "WhatsApp Video 2025-12-24 at 10.33.02 PM.mp4", text: "لما شوفنا بعض برا الهضبه اخيرا " },
             { file: "WhatsApp Video 2025-12-24 at 10.41.25 PM.mp4", text: "فاكره اول صوره مبنا " },
-            { file: "WhatsApp Video 2025-12-24 at 10.33.49 PM.mp4", text: "يوم عيد ميلادك  كان من احسن ايام في حياتي عشان شيفك مبسوظه " }
+            { file: "WhatsApp Video 2025-12-24 at 10.33.49 PM.mp4", text: "يوم عيد ميلادك كان من احسن ايام في حياتي عشان شيفك مبسوطه " }
         ]
     };
 
-   function checkPass() {
-    const enteredPass = document.getElementById('pass').value.toLowerCase();
-    if (enteredPass === config.password) {
-        // Hide login
-        document.getElementById('login-page').style.display = 'none';
-        
-        // Show message page
-        const messagePage = document.getElementById('message-page');
-        messagePage.classList.remove('hidden');
-        messagePage.style.display = 'block'; // Force display
-        
-        // Show music button and start music
-        document.getElementById('music-btn').classList.remove('hidden');
-        
-        const music = document.getElementById('bg-music');
-        music.play().catch(error => {
-            console.log("Autoplay blocked, waiting for user interaction.");
-        });
-    } else {
-        alert("Wrong password! Hint: it's 'love'");
+    function checkPass() {
+        const passInput = document.getElementById('pass').value.toLowerCase().trim();
+        if (passInput === config.password) {
+            // Hide login, show message
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('message-page').classList.remove('hidden');
+            
+            // Music Setup
+            const musicBtn = document.getElementById('music-btn');
+            const audio = document.getElementById('bg-music');
+            
+            musicBtn.classList.remove('hidden');
+            audio.play().catch(e => console.log("Audio play deferred until next click"));
+        } else {
+            alert("Wrong password! try again ❤️");
+        }
     }
-}
 
     function showMemories() {
         document.getElementById('message-page').classList.add('hidden');
@@ -167,15 +164,16 @@
             const isVideo = m.file.toLowerCase().endsWith('.mp4') || m.file.toLowerCase().endsWith('.mov');
             
             if (isVideo) {
-                div.innerHTML = `<video controls><source src="${m.file}" type="video/mp4"></video>
+                div.innerHTML = `<video controls style="width:100%; border-radius:15px;"><source src="${m.file}" type="video/mp4"></video>
                                  <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
             } else {
-                div.innerHTML = `<img src="${m.file}">
+                div.innerHTML = `<img src="${m.file}" style="width:100%; border-radius:15px;">
                                  <p class="letter-text" style="font-size:1rem; padding:10px;">${m.text}</p>`;
             }
             container.appendChild(div);
         });
         document.getElementById('memories-feed').classList.remove('hidden');
+        window.scrollTo(0, 0);
     }
 
     function showFinalMessage() {
